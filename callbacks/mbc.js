@@ -22,18 +22,18 @@ module.exports = function(site, cheerio, cache) {
       const _path = table.children[1].children[2].children[0].attribs.href;
       const link = `${env.siteInfo[site].domain}${_path}`;
       const _id = Number(_path.replace(/[^0-9]/g, ''));
-      if (cache[site].indexOf(_id) > -1) {
+      if (cache.indexOf(_id) > -1) {
         console.log(`No updates from ${site}.`);
       } else {
-        if (!cache[site].length) {
+        if (!cache.length) {
           console.log(`Initialized cache for ${site}`)
-          cache[site].push(_id);
+          cache.push(_id);
         } else {
           console.log(`Updating ${site} cache!`);
-          cache[site].push(_id);
-          if (cache[site].length > 5) cache[site].shift();
+          cache.push(_id);
+          if (cache.length > 5) cache.shift();
           console.log(`${env.tags[site]} - New Listing!`)
-          setTimeout(sendMail.bind(null, tableMaker({ name, price, link }), `[${env.tags[site]}] NEW - ${price}, ${name}`, env.toList[name]), Math.min(500, Math.random() * 10000));
+          setTimeout(sendMail.bind(null, tableMaker({ name, price, link }), `[${env.tags[site]}] NEW - ${price}, ${site}`, env.toList[site]), Math.min(500, Math.random() * 10000));
         }
       }
     });

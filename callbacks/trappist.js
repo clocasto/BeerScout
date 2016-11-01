@@ -50,29 +50,29 @@ module.exports = function(name, cheerio, cache) {
             stock: availabilities[k].data === 'Available' ? true : false,
           }
         })
-      if (!Object.keys(cache[name])
+      if (!Object.keys(cache)
         .length) {
         products.forEach(p => {
-          cache[name][p.id] = p;
+          cache[p.id] = p;
         });
         console.log(`Initialized cache for ${name}`)
       } else {
         products.forEach(p => {
-          const record = cache[name][p.id]
+          const record = cache[p.id]
           if (!record) {
             console.log(`Updating ${name} cache for ${p.id}!`);
-            cache[name][p.id] = p;
+            cache[p.id] = p;
             console.log(`${name} - New Posting!`)
             setTimeout(sendMail.bind(null, tableMaker(p), `[${env.tags[name]}] NEW - ${p.price}, ${p.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
           } else {
             if (!record.stock && p.stock) {
               console.log(`${name} - In Stock: ${p.name}`)
               setTimeout(sendMail.bind(null, tableMaker(p), `[${env.tags[name]}] REPLENISH - ${p.price}, ${p.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
-            } else if ((p.price < record.price) && p.stock) [name]
+            } else if ((p.price < record.price) && p.stock) {
               console.log(`${name} - Price Slash: ${p.name}`)
               setTimeout(sendMail.bind(null, tableMaker(p), `[${env.tags[name]}] PRICE DROP: ${p.price}, ${p.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
             }
-            cache[name][p.id] = p;
+            cache[p.id] = p;
           }
         })
       }
