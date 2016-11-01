@@ -1,0 +1,16 @@
+{
+  "name": "Beer Scout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "nodemailer": "^2.6.4"
+  }
+}
