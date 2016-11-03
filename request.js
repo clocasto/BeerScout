@@ -1,5 +1,6 @@
 'use strict';
 const http = require('http');
+const https = require('https');
 
 const options = require('./env')
   .request;
@@ -12,7 +13,9 @@ const requestSite = function(callback, urlObj) {
   _date = date;
   if (diff < 1000) return;
 
-  http.request(urlObj, callback)
+  if (urlObj.protocol === 'https') https.request(Object.assign(urlObj, { protocol: undefined }), callback)
+    .end();
+  else http.request(Object.assign(urlObj, { protocol: undefined }), callback)
     .end();
 }
 
