@@ -44,7 +44,7 @@ module.exports = function(name, cheerio, cache) {
           }
         })
         .filter(p => {
-          return !/poster|sign|tasting favourites|shirt|glass|crate/.test(p.name.toLowerCase());
+          return !/poster|sign|shirt|glass|crate/.test(p.name.toLowerCase());
         })
 
       if (!Object.keys(cache).length) {
