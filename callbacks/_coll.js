@@ -57,7 +57,7 @@ module.exports = function(name, cheerio, cache, product, title, sight, post) {
 
       const listing = Object.assign({}, product, { request: undefined }, { bid, buy, timeLeft })
 
-      console.log(`${env.tags[name]}/${title} - New Listing!`)
+      console.log(`Added ${product.id} to ${env.tags[name]}/${title} cache.`)
       cache.push(listing.id);
       if (cache.length > sight) cache.shift();
       const price = bid < buy ? bid : buy;

@@ -52,13 +52,10 @@ module.exports = function(name, cheerio, cache, title, sight) {
         console.log(`No updates from ${name}/${title}.`);
       }
       if (cache.length < sight && products.length) {
-        console.log(`Initialized cache for ${name}/${title}`);
         products.forEach(l => requestSite(productViewer(name, cheerio, cache, l, title, sight, false), l.request))
-      }
-      else if (products.length) {
+      } else if (products.length) {
         products.forEach(l => requestSite(productViewer(name, cheerio, cache, l, title, sight, true), l.request))
       }
-      console.log(`Cache for ${name}/${title}: ${cache}`)
     });
   }
 }
