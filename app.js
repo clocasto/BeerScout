@@ -15,7 +15,7 @@ setInterval(function() {
   setTimeout(requestSite.bind(null, require(`./callbacks/${env.sites[3]}`)(env.sites[3], cheerio, cache[env.sites[3]][0])), 16000, env.request[env.sites[3]][0]);
   setTimeout(requestSite.bind(null, require(`./callbacks/${env.sites[3]}`)(env.sites[3], cheerio, cache[env.sites[3]][1])), 20000, env.request[env.sites[3]][1]);
   setTimeout(requestSite.bind(null, require(`./callbacks/${env.sites[3]}`)(env.sites[3], cheerio, cache[env.sites[3]][2])), 24000, env.request[env.sites[3]][2]);
-  setTimeout(requestSite.bind(null, require(`./callbacks/${env.sites[4]}`)(env.sites[4], cheerio, cache[env.sites[4]][0], 'NEW POST', 5)), 28000, env.request[env.sites[4]][0]);
+  setTimeout(requestSite.bind(null, require(`./callbacks/${env.sites[4]}`)(env.sites[4], cheerio, cache[env.sites[4]][0], 'NEW POST', 10)), 28000, env.request[env.sites[4]][0]);
   setTimeout(requestSite.bind(null, require(`./callbacks/${env.sites[4]}`)(env.sites[4], cheerio, cache[env.sites[4]][1], 'ENDING SOON', 1)), 32000, env.request[env.sites[4]][1]);
 }, 80000)
 

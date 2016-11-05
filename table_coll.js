@@ -1,6 +1,8 @@
 'use strict';
 module.exports = function(beer) {
   let buy = beer.buy ? `<td style="color:red">${beer.buy}</td>` : '<td>--</td>';
+  let bid = beer.bid ? `<td style="color:blue">${beer.bid}</td>` : '<td>--</td>';
+
   return `
 	  <h3>Time left: ${beer.timeLeft}</h3>
 	  <table style="text-align:left;">
@@ -14,7 +16,7 @@ module.exports = function(beer) {
 	    <tbody>
 	      <tr style="text-align:left;">
 	      	<td><a href="${beer.link}">${beer.name}</a></td>
-	        <td>${beer.bid}</td>
+	        ${bid}
 	        ${buy}
 	      </tr>
 	    </tbody>

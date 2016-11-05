@@ -23,7 +23,7 @@ const timeRemaining = function(ms) {
   return `${days}d ${hours}h ${minutes}m ${seconds}s`;
 }
 
-module.exports = function(name, cheerio, cache, product, title, sight, post) {
+module.exports = function(name, cheerio, cache, product, title, sight) {
   const host = product.request.host;
   const protocol = product.request.protocol;
 
@@ -59,9 +59,11 @@ module.exports = function(name, cheerio, cache, product, title, sight, post) {
 
       console.log(`Added ${product.id} to ${env.tags[name]}/${title} cache.`)
       cache.push(listing.id);
-      if (cache.length > sight) cache.shift();
-      const price = bid < buy ? bid : buy;
-      if (post) setTimeout(sendMail.bind(null, tableMaker(listing), `[${env.tags[name]}] ${title}: ${price}, ${listing.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
+      if (cache.length > sight) {
+        cache.shift();
+        const price = bid < buy ? bid : buy;
+        setTimeout(sendMail.bind(null, tableMaker(listing), `[${env.tags[name]}] ${title}: ${price}, ${listing.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
+      }
     });
   }
 }
