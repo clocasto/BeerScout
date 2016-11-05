@@ -24,8 +24,6 @@ const timeRemaining = function(ms) {
 }
 
 module.exports = function(name, cheerio, cache, product, title, sight) {
-  const host = product.request.host;
-  const protocol = product.request.protocol;
 
   return function(response) {
     let htmlDoc = '';
