@@ -1,21 +1,21 @@
 'use strict';
 module.exports = function(beer) {
-	let buy = beer.buy ? `<td>BUYOUT</td>
-	        <td>${beer.buy}</td>` : '';
+  let buy = beer.buy ? `<td style="color:red">${beer.buy}</td>` : '<td>--</td>';
   return `
-	  <h5>Time left: ${beer.timeLeft}</h5>
+	  <h3>Time left: ${beer.timeLeft}</h3>
 	  <table style="text-align:left;">
 	    <thead>
 	      <tr style="text-align:left;">
-	        <th><a href="${beer.link}">${beer.name}</a></th>
-	        <th>Bubbly Beer Price</th>
+	        <th>Bubbly Beer Name</th>
+	        <th>Bubbly Bid Price</th>
+	        <th>Bubbly Buy-It-Now Price</th>
 	      </tr>
 	    </thead>
 	    <tbody>
 	      <tr style="text-align:left;">
-	        <td>BID</td>
+	      	<td><a href="${beer.link}">${beer.name}</a></td>
 	        <td>${beer.bid}</td>
-	        ${beer.buy ? buy : ''}
+	        ${buy}
 	      </tr>
 	    </tbody>
 	  </table>
