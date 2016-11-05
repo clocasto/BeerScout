@@ -13,10 +13,14 @@ const requestSite = function(callback, urlObj) {
   _date = date;
   if (diff < 1000) return;
 
-  if (urlObj.protocol === 'https') https.request(Object.assign(urlObj, { protocol: undefined }), callback)
-    .end();
-  else http.request(Object.assign(urlObj, { protocol: undefined }), callback)
-    .end();
+  try {
+    if (urlObj.protocol === 'https') https.request(Object.assign(urlObj, { protocol: undefined }), callback)
+      .end();
+    else http.request(Object.assign(urlObj, { protocol: undefined }), callback)
+      .end();
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 module.exports = requestSite;
