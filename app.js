@@ -12,5 +12,6 @@ setInterval(function() {
   setTimeout(requestSite.bind(null, require(`./callbacks/${env.sites[1]}`)(env.sites[1], cheerio, cache[env.sites[1]][0])), 8000, env.request[env.sites[1]][0]);
   setTimeout(requestSite.bind(null, require(`./callbacks/${env.sites[1]}`)(env.sites[1], cheerio, cache[env.sites[1]][1])), 16000, env.request[env.sites[1]][1]);
   setTimeout(requestSite.bind(null, require(`./callbacks/${env.sites[2]}`)(env.sites[2], cheerio, cache[env.sites[2]])), 24000, env.request[env.sites[2]]);
-}, 80000)
+  setTimeout(requestSite.bind(null, require(`./callbacks/${env.sites[3]}`)(env.sites[3], cheerio, cache[env.sites[3]])), 32000, env.request[env.sites[3]]);
+}, 90000)
 
