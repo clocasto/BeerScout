@@ -45,7 +45,8 @@ module.exports = function(name, cheerio, cache, title, sight) {
         .filter(p => {
           if (/poster|sign|shirt|glass|crate/.test(p.name.toLowerCase())) return false;
           if (cache.indexOf(p.id) > -1) return false;
-          return true;
+          if (/cant|fou|hanssens|hansens|cantillon|fonteinen|font|drei/.test(p.name.toLowerCase())) return false;
+          return false;
         });
 
       console.log(`List of products found for ${name}/${title}: ${products.map(p => p.id)}`)

@@ -29,7 +29,8 @@ module.exports = function(site, cheerio, cache) {
           console.log(`Initialized cache for ${site}`)
           cache.push(_id);
         } else {
-          console.log(`Updating ${site} cache!`);
+          if (!(/cant|fou|hanssens|hansens|cantillon|fonteinen|font|drei/.test(name.toLowerCase()))) return;
+          console.log(`Updating ${site} cache with ${_id}!`);
           cache.push(_id);
           if (cache.length > 5) cache.shift();
           console.log(`${env.tags[site]} - New Listing!`)
