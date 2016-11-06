@@ -47,11 +47,14 @@ module.exports = function(name, cheerio, cache, title, sight) {
           if (cache.indexOf(p.id) > -1) return false;
           return true;
         })
-
+      console.log(`List of products found for ${name}/${title}: ${products.map(p => p.id)}`)
       if (!products.length) {
         console.log(`No updates from ${name}/${title}.`);
       } else {
-        products.forEach(l => requestSite(productViewer(name, cheerio, cache, l, title, sight), l.request))
+        products.forEach(l => {
+          cache.push(l.id)
+          requestSite(productViewer(name, cheerio, cache, l, title, sight), l.request)
+        })
       }
       console.log(`Cache for ${name}/${title}: ${cache}`)
     });

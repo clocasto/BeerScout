@@ -56,12 +56,18 @@ module.exports = function(name, cheerio, cache, product, title, sight) {
       const listing = Object.assign({}, product, { request: undefined }, { bid, buy, timeLeft })
 
       console.log(`Added ${product.id} to ${env.tags[name]}/${title} cache.`)
-      cache.push(listing.id);
       if (cache.length > sight) {
         cache.shift();
-        const price = bid < buy ? bid : buy;
-        setTimeout(sendMail.bind(null, tableMaker(listing), `[${env.tags[name]}] ${title}: ${price}, ${listing.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
       }
+      let price;
+      if (bid && buy) {
+        price = bid < buy ? bid : buy;
+      } else if (bid) {
+        price = bid;
+      } else {
+        price = buy;
+      }
+      setTimeout(sendMail.bind(null, tableMaker(listing), `[${env.tags[name]}] ${title}: ${price}, ${listing.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
     });
   }
 }
