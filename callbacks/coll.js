@@ -46,15 +46,20 @@ module.exports = function(name, cheerio, cache, title, sight) {
           if (/poster|sign|shirt|glass|crate/.test(p.name.toLowerCase())) return false;
           if (cache.indexOf(p.id) > -1) return false;
           return true;
-        })
+        });
+
       console.log(`List of products found for ${name}/${title}: ${products.map(p => p.id)}`)
+
       if (!products.length) {
         console.log(`No updates from ${name}/${title}.`);
       } else {
+        if (cache.length) {
+          products.forEach(p => requestSite(productViewer(name, cheerio, cache, p, title, sight), p.request))
+        }
         products.forEach(l => {
-          cache.push(l.id)
-          requestSite(productViewer(name, cheerio, cache, l, title, sight), l.request)
-        })
+          cache.push(l.id);
+          console.log(`Added ${l.id} to ${env.tags[name]}/${title} cache.`);
+        });
       }
       console.log(`Cache for ${name}/${title}: ${cache}`)
     });

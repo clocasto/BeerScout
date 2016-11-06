@@ -7,7 +7,7 @@ const extractPrice = function(str) {
   return /(\$[0-9]+\.[0-9]+)/.exec(str)[1];
 }
 
-const timeRemaining = function(ms) {
+function timeRemaining(ms) {
   const left = ms - Date.now();
 
   const _day = 1000 * 60 * 60 * 24;
@@ -37,11 +37,14 @@ module.exports = function(name, cheerio, cache, product, title, sight) {
     response.on('end', function() {
       const $ = cheerio.load(htmlDoc);
 
-      let bid, buy;
+      let bid, buy, timeLeft;
       if ($('.current-price')
         .toArray()[0]) {
         bid = extractPrice($('.current-price')
           .toArray()[0].children[0].data);
+        timeLeft = timeRemaining($('.time')
+          .children('span')
+          .attr('data-countdown'));
       }
       if ($('#product-price')
         .toArray()
@@ -49,14 +52,11 @@ module.exports = function(name, cheerio, cache, product, title, sight) {
         buy = extractPrice($('#product-price')
           .toArray()[0].children[0].data);
       }
-      const timeLeft = timeRemaining($('.time')
-        .children('span')
-        .attr('data-countdown'));
 
-      const listing = Object.assign({}, product, { request: undefined }, { bid, buy, timeLeft })
+      delete product.request;
+      const listing = Object.assign({}, product, { bid, buy, timeLeft })
 
-      console.log(`Added ${product.id} to ${env.tags[name]}/${title} cache.`)
-      if (cache.length > sight) {
+      if (cache.length > 10 * sight) {
         cache.shift();
       }
       let price;
