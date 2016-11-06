@@ -37,7 +37,7 @@ module.exports = function(name, cheerio, cache, product, title, sight) {
     response.on('end', function() {
       const $ = cheerio.load(htmlDoc);
 
-      let bid, buy, timeLeft;
+      let bid, buy, price, timeLeft;
       if ($('.current-price')
         .toArray()[0]) {
         bid = extractPrice($('.current-price')
@@ -59,9 +59,9 @@ module.exports = function(name, cheerio, cache, product, title, sight) {
       if (cache.length > 10 * sight) {
         cache.shift();
       }
-      let price;
+      
       if (bid && buy) {
-        price = bid < buy ? bid : buy;
+        price = Number(bid.replace(/\$/, '')) < Number(buy.replace(/\$/, '')) ? bid : buy;
       } else if (bid) {
         price = bid;
       } else {

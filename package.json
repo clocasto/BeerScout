@@ -1,13 +1,13 @@
 {
   "name": "BeerScout",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.3.6",
+  "description": "A worker process which watches sites for new beer listings.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "@clocasto",
   "license": "ISC",
   "dependencies": {
     "cheerio": "^0.22.0",
