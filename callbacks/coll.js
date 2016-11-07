@@ -45,7 +45,7 @@ module.exports = function(name, cheerio, cache, title, sight) {
         .filter(p => {
           if (/poster|sign|shirt|glass|crate/.test(p.name.toLowerCase())) return false;
           if (cache.indexOf(p.id) > -1) return false;
-          if (/cant|fou|hanssens|hansens|cantillon|fonteinen|font|drei/.test(p.name.toLowerCase())) return false;
+          if (/cant|fou|hanssens|hanss|hansens|cantillon|project|schramm|jester|farmstead|fonteinen|font|drei/.test(p.name.toLowerCase())) return true;
           return false;
         });
 
