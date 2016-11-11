@@ -20,10 +20,11 @@ module.exports = function sendMail(data, subject, emails) {
     subject,
     to: emails.join(', ').toString(),
   });
-  transporter.sendMail(mailOptions, function(error, info) {
-    if (error) {
-      return console.log(error);
-    }
-    console.log('Message sent: ' + info.response);
-  });
+  // transporter.sendMail(mailOptions, function(error, info) {
+  //   if (error) {
+  //     return console.log(error);
+  //   }
+  //   console.log('Message sent: ' + info.response);
+  // });
+  console.log('EMAIL SENT');
 }

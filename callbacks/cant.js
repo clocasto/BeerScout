@@ -29,11 +29,13 @@ module.exports = function (name, cheerio, cache) {
         .toArray();
 
       const links = $('.product-name')
-        .map((i, n) => n.attribs.href);
+        .map((i, n) => n.attribs.href)
+        .toArray();
 
       const prices = $('.product-price')
         .map((i, n) => $(n)
           .text())
+        .toArray();
 
       const availabilities = $('.availability span')
         .map((i, n) => $(n)
@@ -51,9 +53,9 @@ module.exports = function (name, cheerio, cache) {
           }
         })
         .filter(p => {
-          return !/poster|sign|shirt|glass|crate/.test(p.name.toLowerCase());
+          return !/poster|sign|shirt|glass|wicker|flag|zip hood|stoneware|crate/.test(p.name.toLowerCase());
         })
-
+      console.log('products', products);
       if (!Object.keys(cache).length) {
         products.forEach(p => cache[p.id] = p);
         console.log(`Initialized cache for ${name}`);

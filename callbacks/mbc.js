@@ -7,6 +7,13 @@ module.exports = function(site, cheerio, cache) {
   return function(response) {
     let htmlDoc = '';
 
+    //Handle errors from server
+    response.on('error', function (err) {
+      const errorMessage = `<h4>${site}</h4><br><span>${err}</span>`;
+      const subject = env.error.subject;
+      sendMail(errorMessage, subject, env.toList.admin);
+    })
+
     //another chunk of data has been recieved, so append it to `htmlDoc`
     response.on('data', function(chunk) {
       htmlDoc += chunk;
@@ -23,13 +30,13 @@ module.exports = function(site, cheerio, cache) {
       const link = `${env.siteInfo[site].domain}${_path}`;
       const _id = Number(_path.replace(/[^0-9]/g, ''));
       if (cache.indexOf(_id) > -1) {
-        console.log(`No updates from ${site}.`);
+        console.log(`No updates for ${site}.`);
       } else {
         if (!cache.length) {
           console.log(`Initialized cache for ${site}`)
           cache.push(_id);
         } else {
-          console.log(`Updating ${site} cache with ${_id}!`);
+          console.log(`Updating ${site} cache for ${_id}!`);
           cache.push(_id);
           if (cache.length > 5) cache.shift();
           console.log(`${env.tags[site]} - New Listing!`)

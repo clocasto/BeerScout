@@ -11,6 +11,13 @@ module.exports = function(name, cheerio, cache, title, sight) {
   return function(response) {
     let htmlDoc = '';
 
+    //Handle errors from server
+    response.on('error', function (err) {
+      const errorMessage = `<h4>${name}</h4><br><span>${err}</span>`;
+      const subject = env.error.subject;
+      sendMail(errorMessage, subject, env.toList.admin);
+    })
+
     //another chunk of data has been recieved, so append it to `htmlDoc`
     response.on('data', function(chunk) {
       htmlDoc += chunk;
@@ -49,8 +56,6 @@ module.exports = function(name, cheerio, cache, title, sight) {
           return false;
         });
 
-      console.log(`List of products found for ${name}/${title}: ${products.map(p => p.id)}`)
-
       if (!products.length) {
         console.log(`No updates from ${name}/${title}.`);
       } else {
@@ -60,7 +65,6 @@ module.exports = function(name, cheerio, cache, title, sight) {
           requestSite(productViewer(name, cheerio, cache, l, title, sight), l.request)
         });
       }
-      console.log(`Cache for ${title}: ${cache}`)
     });
   }
 }

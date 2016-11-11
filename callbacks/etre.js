@@ -7,6 +7,13 @@ module.exports = function(name, cheerio, cache) {
   return function(response) {
     let htmlDoc = '';
 
+    //Handle errors from server
+    response.on('error', function (err) {
+      const errorMessage = `<h4>${name}</h4><br><span>${err}</span>`;
+      const subject = env.error.subject;
+      sendMail(errorMessage, subject, env.toList.admin);
+    })
+
     //another chunk of data has been recieved, so append it to `htmlDoc`
     response.on('data', function(chunk) {
       htmlDoc += chunk;
@@ -67,7 +74,7 @@ module.exports = function(name, cheerio, cache) {
             cache[p.id] = p;
           }
         })
-        console.log(`Reviewed ${name} listings.`)
+        console.log(`No updates for ${name}.`);
       }
     });
   }

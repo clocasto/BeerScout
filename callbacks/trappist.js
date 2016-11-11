@@ -3,17 +3,24 @@ const tableMaker = require('../table');
 const sendMail = require('../email.js');
 const env = require('../env');
 
-module.exports = function(name, cheerio, cache) {
-  return function(response) {
+module.exports = function (name, cheerio, cache) {
+  return function (response) {
     let htmlDoc = '';
 
+    //Handle errors from server
+    response.on('error', function (err) {
+      const errorMessage = `<h4>${name}</h4><br><span>${err}</span>`;
+      const subject = env.error.subject;
+      sendMail(errorMessage, subject, env.toList.admin);
+    })
+
     //another chunk of data has been recieved, so append it to `htmlDoc`
-    response.on('data', function(chunk) {
+    response.on('data', function (chunk) {
       htmlDoc += chunk;
     });
 
     //the whole response has been recieved, so we just print it out here
-    response.on('end', function() {
+    response.on('end', function () {
       const $ = cheerio.load(htmlDoc);
       const listings = $('#product_list')
         .children('li')
@@ -76,7 +83,7 @@ module.exports = function(name, cheerio, cache) {
           }
         })
       }
-      console.log(`Reviewed ${name} listings.`)
+      console.log(`No updates for ${name}.`);
     });
   }
 }
