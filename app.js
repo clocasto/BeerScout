@@ -15,12 +15,12 @@ setInterval(function () {
   compressedBeerScout(0, cache[env.sites[0]], 0, env.request[env.sites[0]]);
   compressedBeerScout(1, cache[env.sites[1]][0], 4000, env.request[env.sites[1]][0]);
   compressedBeerScout(1, cache[env.sites[1]][1], 8000, env.request[env.sites[1]][1]);
-  compressedBeerScout(2, cache[env.sites[2]], 8000, env.request[env.sites[2]]);
-  compressedBeerScout(3, cache[env.sites[3]][0], 12000, env.request[env.sites[3]][0]);
-  compressedBeerScout(3, cache[env.sites[3]][1], 16000, env.request[env.sites[3]][1]);
-  compressedBeerScout(3, cache[env.sites[3]][2], 20000, env.request[env.sites[3]][2]);
-  compressedBeerScout(4, cache[env.sites[4]], 24000, env.request[env.sites[4]]);
-  compressedBeerScout(5, cache[env.sites[5]][0], 28000, env.request[env.sites[5]][0], 'NEW POST', 10);
-  compressedBeerScout(5, cache[env.sites[5]][1], 32000, env.request[env.sites[5]][1], 'ENDING SOON', 20);
+  compressedBeerScout(2, cache[env.sites[2]], 12000, env.request[env.sites[2]]);
+  compressedBeerScout(3, cache[env.sites[3]][0], 16000, env.request[env.sites[3]][0]);
+  compressedBeerScout(3, cache[env.sites[3]][1], 20000, env.request[env.sites[3]][1]);
+  compressedBeerScout(3, cache[env.sites[3]][2], 24000, env.request[env.sites[3]][2]);
+  compressedBeerScout(4, cache[env.sites[4]], 28000, env.request[env.sites[4]]);
+  compressedBeerScout(5, cache[env.sites[5]][0], 32000, env.request[env.sites[5]][0], 'NEW POST', 10);
+  compressedBeerScout(5, cache[env.sites[5]][1], 36000, env.request[env.sites[5]][1], 'ENDING SOON', 20);
 }, 90000)
 

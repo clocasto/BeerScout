@@ -13,9 +13,7 @@ module.exports = function(name, cheerio, cache, title, sight) {
 
     //Handle errors from server
     response.on('error', function (err) {
-      const errorMessage = `<h4>${name}</h4><br><span>${err}</span>`;
-      const subject = env.error.subject;
-      sendMail(errorMessage, subject, env.toList.admin);
+      console.error(err);
     })
 
     //another chunk of data has been recieved, so append it to `htmlDoc`
@@ -52,12 +50,12 @@ module.exports = function(name, cheerio, cache, title, sight) {
         .filter(p => {
           if (/poster|sign|shirt|glass|crate/.test(p.name.toLowerCase())) return false;
           if (cache.indexOf(p.id) > -1) return false;
-          if (/cant|fou|hanssens|hanss|hansens|cantillon|project|schramm|jester|farmstead|fonteinen|font|drei/.test(p.name.toLowerCase())) return true;
+          if (/canti|fou|hanssens|hanss|hansens|cantillon|project|schramm|jester|farmstead|fonteinen|font|drei/.test(p.name.toLowerCase())) return true;
           return false;
         });
 
       if (!products.length) {
-        console.log(`No updates from ${name}/${title}.`);
+        console.log(`No updates for ${name}/${title}.`);
       } else {
         products.forEach(l => {
           cache.push(l.id);

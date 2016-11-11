@@ -57,13 +57,12 @@ module.exports = function (name, cheerio, cache) {
             stock: availabilities[k].data === 'Available' ? true : false,
           }
         })
-      if (!Object.keys(cache)
-        .length) {
+      if (!Object.keys(cache).length && products.length) {
         products.forEach(p => {
           cache[p.id] = p;
         });
         console.log(`Initialized cache for ${name}`)
-      } else {
+      } else if (products.length) {
         products.forEach(p => {
           const record = cache[p.id]
           if (!record) {

@@ -54,10 +54,10 @@ module.exports = function (name, cheerio, cache) {
           return !/poster|sign|shirt|glass|crate/.test(p.name.toLowerCase());
         })
 
-      if (!Object.keys(cache).length) {
+      if (!Object.keys(cache).length && products.length) {
         products.forEach(p => cache[p.id] = p);
         console.log(`Initialized cache for ${name}`);
-      } else {
+      } else if (products.length) {
         products.forEach(p => {
           const record = cache[p.id];
           if (!record) {
@@ -76,8 +76,8 @@ module.exports = function (name, cheerio, cache) {
             cache[p.id] = p;
           }
         })
-        console.log(`No updates for ${name}.`);
       }
+      console.log(`No updates for ${name}.`);
     });
   }
 }

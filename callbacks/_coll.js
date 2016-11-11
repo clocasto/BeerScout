@@ -30,9 +30,7 @@ module.exports = function(name, cheerio, cache, product, title, sight) {
 
     //Handle errors from server
     response.on('error', function (err) {
-      const errorMessage = `<h4>${name}</h4><br><span>${err}</span>`;
-      const subject = env.error.subject;
-      sendMail(errorMessage, subject, env.toList.admin);
+      console.error(err);
     })
 
     //another chunk of data has been recieved, so append it to `htmlDoc`
@@ -66,7 +64,7 @@ module.exports = function(name, cheerio, cache, product, title, sight) {
       if (cache.length > 10 * sight) {
         cache.shift();
       }
-      
+
       if (bid && buy) {
         price = Number(bid.replace(/\$/, '')) < Number(buy.replace(/\$/, '')) ? bid : buy;
       } else if (bid) {

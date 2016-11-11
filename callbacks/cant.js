@@ -55,11 +55,11 @@ module.exports = function (name, cheerio, cache) {
         .filter(p => {
           return !/poster|sign|shirt|glass|wicker|flag|zip hood|stoneware|crate/.test(p.name.toLowerCase());
         })
-      console.log('products', products);
-      if (!Object.keys(cache).length) {
+
+      if (!Object.keys(cache).length && products.length) {
         products.forEach(p => cache[p.id] = p);
         console.log(`Initialized cache for ${name}`);
-      } else {
+      } else if (products.length) {
         products.forEach(p => {
           const record = cache[p.id];
           if (!record) {

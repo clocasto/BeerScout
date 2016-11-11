@@ -3,8 +3,8 @@ const tableMaker = require('../table');
 const sendMail = require('../email.js');
 const env = require('../env');
 
-module.exports = function(name, cheerio, cache) {
-  return function(response) {
+module.exports = function (name, cheerio, cache) {
+  return function (response) {
     let htmlDoc = '';
 
     //Handle errors from server
@@ -15,17 +15,17 @@ module.exports = function(name, cheerio, cache) {
     })
 
     //another chunk of data has been recieved, so append it to `htmlDoc`
-    response.on('data', function(chunk) {
+    response.on('data', function (chunk) {
       htmlDoc += chunk;
     });
 
     //the whole response has been recieved, so we just print it out here
-    response.on('end', function() {
+    response.on('end', function () {
 
       const $ = cheerio.load(htmlDoc);
 
       const listings = $('.itemTitle a')
-        .toArray()  
+        .toArray()
       const names = listings.map(l => l.children[0].data);
       const links = listings.map(l => l.attribs.href);
       const stock = $('.tabTable .productListing-rowheading')
@@ -52,10 +52,10 @@ module.exports = function(name, cheerio, cache) {
           return !/poster|sign|shirt|glass|crate/.test(p.name.toLowerCase());
         })
 
-      if (!Object.keys(cache).length) {
+      if (!Object.keys(cache).length && products.length) {
         products.forEach(p => cache[p.id] = p);
         console.log(`Initialized cache for ${name}`);
-      } else {
+      } else if (products.length) {
         products.forEach(p => {
           const record = cache[p.id];
           if (!record) {
@@ -74,8 +74,8 @@ module.exports = function(name, cheerio, cache) {
             cache[p.id] = p;
           }
         })
-        console.log(`No updates for ${name}.`);
       }
+      console.log(`No updates for ${name}.`);
     });
   }
 }
