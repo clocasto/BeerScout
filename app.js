@@ -7,8 +7,8 @@ const cache = Object.assign({}, env.startingCache);
 const sendMail = require('./email');
 setTimeout(function () { sendMail(env.startUp.data, env.startUp.subject, env.toList.admin) }, 300);
 
-function compressedBeerScout(...args) {
-  return setTimeout(requestSite.bind(null, require(`./callbacks/${env.sites[args[0]]}`)(env.sites[args[0]], cheerio, args[1], args[4], args[5])), args[2], args[3]);
+function compressedBeerScout() {
+  return setTimeout(requestSite.bind(null, require(`./callbacks/${env.sites[arguments[0]]}`)(env.sites[arguments[0]], cheerio, arguments[1], arguments[4], arguments[5])), arguments[2], arguments[3]);
 }
 
 setInterval(function () {
