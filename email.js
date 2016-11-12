@@ -13,17 +13,18 @@ module.exports = function sendMail(data, subject, emails) {
   let date = new Date();
   const diff = date - _date;
   _date = date;
-  if (diff < 100) return;
+  if (diff < 25) return;
 
   const mailOptions = Object.assign({}, env.email, {
     html: data,
     subject,
     to: emails.join(', ').toString(),
   });
-  transporter.sendMail(mailOptions, function(error, info) {
+  transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       return console.log(error);
     }
     console.log('Message sent: ' + info.response);
   });
 }
+

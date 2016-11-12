@@ -7,7 +7,7 @@ const options = require('./env')
 
 let _date = new Date();
 
-const requestSite = function(callback, urlObj) {
+const requestSite = function (callback, urlObj) {
   let date = new Date();
   let diff = date - _date;
   _date = date;

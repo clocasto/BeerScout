@@ -3,18 +3,15 @@ const tableMaker = require('../table_coll');
 const sendMail = require('../email.js');
 const env = require('../env');
 
-const extractPrice = function(str) {
-  return /(\$[0-9]+\.[0-9]+)/.exec(str)[1];
+const extractPrice = function (str) {
+  const price = /(\$[0-9]+,?[0-9]*\.[0-9]+)/.exec(str);
+  return price ? price[1] : 'ERROR';
 }
 
 function timeRemaining(ms) {
+  if (!ms) return 'Indefinite';
   const left = ms - Date.now();
-
   const _day = 1000 * 60 * 60 * 24;
-  const _hour = 1000 * 60 * 60;
-  const _minute = 1000 * 60;
-  const _second = 1000;
-
   const days = Math.floor(left / _day);
   const hours = Math.floor(((left / _day) % 1) * 24);
   const minutes = Math.floor((((left / _day) % 1) * 24 * 60) % 60);
@@ -23,9 +20,8 @@ function timeRemaining(ms) {
   return `${days}d ${hours}h ${minutes}m ${seconds}s`;
 }
 
-module.exports = function(name, cheerio, cache, product, title, sight) {
-
-  return function(response) {
+module.exports = function (name, cheerio, cache, product, title, sight) {
+  return function (response) {
     let htmlDoc = '';
 
     //Handle errors from server
@@ -34,12 +30,12 @@ module.exports = function(name, cheerio, cache, product, title, sight) {
     })
 
     //another chunk of data has been recieved, so append it to `htmlDoc`
-    response.on('data', function(chunk) {
+    response.on('data', function (chunk) {
       htmlDoc += chunk;
     });
 
     //the whole response has been recieved, so we just print it out here
-    response.on('end', function() {
+    response.on('end', function () {
       const $ = cheerio.load(htmlDoc);
 
       let bid, buy, price, timeLeft;
@@ -65,13 +61,9 @@ module.exports = function(name, cheerio, cache, product, title, sight) {
         cache.shift();
       }
 
-      if (bid && buy) {
-        price = Number(bid.replace(/\$/, '')) < Number(buy.replace(/\$/, '')) ? bid : buy;
-      } else if (bid) {
-        price = bid;
-      } else {
-        price = buy;
-      }
+      if (bid && buy) price = Number(bid.replace(/\$/, '')) < Number(buy.replace(/\$/, '')) ? bid : buy;
+      else if (bid) price = bid;
+      else price = buy;
       setTimeout(sendMail.bind(null, tableMaker(listing), `[${env.tags[name]}] ${title}: ${price}, ${listing.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
     });
   }
