@@ -1,5 +1,4 @@
 'use strict';
-const sendMail = require('../email.js');
 const env = require('../env');
 const requestSite = require('../request.js');
 
@@ -30,15 +29,15 @@ module.exports = function (name, cheerio, cache, title, sight) {
         .toArray()
         .slice(0, sight);
 
-      const names = listings.map(l => l.children[0].data);
-      const links = listings.map(l => l.attribs.href);
-      const ids = links.map(l => /([0-9]+$)/.exec(l)[1]);
+      const names = listings.map(listing => listing.children[0].data);
+      const links = listings.map(listing => listing.attribs.href);
+      const ids = links.map(link => /([0-9]+$)/.exec(link)[1]);
 
       let products = names
-        .map((p, i) => {
+        .map((product, i) => {
           return {
             id: ids[i],
-            name: p,
+            name: product,
             link: links[i],
             request: {
               host,
@@ -47,10 +46,10 @@ module.exports = function (name, cheerio, cache, title, sight) {
             }
           }
         })
-        .filter(p => {
-          if (cache.indexOf(p.id) > -1) return false;
-          if (/poster|sign|shirt|glass|crate/.test(p.name.toLowerCase())) return false;
-          if (/canti|fou|hanssens|hanss|hansens|cantillon|project|schramm|jester|farmstead|fonteinen|font|drei/.test(p.name.toLowerCase())) return true;
+        .filter(product => {
+          if (cache.indexOf(product.id) > -1) return false;
+          if (/poster|sign|shirt|glass|crate/.test(product.name.toLowerCase())) return false;
+          if (/canti|fou|hanssens|hanss|hansens|cantillon|project|schramm|jester|farmstead|fonteinen|font|drei/.test(product.name.toLowerCase())) return true;
           return false;
         });
 
@@ -66,7 +65,7 @@ module.exports = function (name, cheerio, cache, title, sight) {
         products.forEach((product, idx) => {
           cache.push(product.id);
           console.log(`Added ${product.id} to ${env.tags[name]}/${title} cache.`);
-          setTimeout(requestSite.bind(null, productViewer(name, cheerio, cache, l, title, sight), l.request), 1250 + idx * 1250);
+          setTimeout(requestSite.bind(null, productViewer(name, cheerio, cache, product, title, sight), product.request), 1250 + idx * 1250);
         });
       }
     });
