@@ -5,6 +5,7 @@ const env = require('../env');
 
 module.exports = function (name, cheerio, cache) {
   return function (response) {
+    if (response instanceof Error) return;
     let htmlDoc = '';
 
     //Handle errors from server
@@ -17,6 +18,10 @@ module.exports = function (name, cheerio, cache) {
     //another chunk of data has been recieved, so append it to `htmlDoc`
     response.on('data', function (chunk) {
       htmlDoc += chunk;
+    });
+    
+    response.on('uncaughtException', function (err) {
+      console.error(err);
     });
 
     //the whole response has been recieved, so we just print it out here

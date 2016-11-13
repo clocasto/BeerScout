@@ -5,6 +5,7 @@ const env = require('../env');
 
 module.exports = function (name, cheerio, cache) {
   return function (response) {
+    if (response instanceof Error) return;
     let htmlDoc = '';
 
     //Handle errors from server

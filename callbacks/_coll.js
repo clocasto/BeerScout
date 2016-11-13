@@ -22,12 +22,17 @@ function timeRemaining(ms) {
 
 module.exports = function (name, cheerio, cache, product, title, sight) {
   return function (response) {
+    if (response instanceof Error) return;
     let htmlDoc = '';
 
     //Handle errors from server
     response.on('error', function (err) {
       console.error(err);
     })
+
+    response.on('uncaughtException', function (err) {
+      console.error(err);
+    });
 
     //another chunk of data has been recieved, so append it to `htmlDoc`
     response.on('data', function (chunk) {
