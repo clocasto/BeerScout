@@ -36,7 +36,7 @@ module.exports = function (site, cheerio, cache) {
           cache.push(_id);
           if (cache.length > 5) cache.shift();
           console.log(`${env.tags[site]} - New Listing!`)
-          setTimeout(sendMail.bind(null, tableMaker({ name, price, link }), `[${env.tags[site]}] NEW - ${price}, ${name}`, env.toList[site]), Math.min(500, Math.random() * 10000));
+          setTimeout(sendMail.bind(null, tableMaker({ name, price, link }), `[${env.tags[site]}] ${price}, ${name}`, env.toList[site]), Math.min(500, Math.random() * 10000));
         }
       }
     });

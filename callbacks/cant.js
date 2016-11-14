@@ -62,14 +62,14 @@ module.exports = function (name, cheerio, cache) {
             console.log(`Updating ${name} cache for ${p.id}!`);
             cache[p.id] = p;
             console.log(`${name} - New Posting!`)
-            setTimeout(sendMail.bind(null, tableMaker(p), `[${env.tags[name]}] NEW - ${p.price}, ${p.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
+            setTimeout(sendMail.bind(null, tableMaker(p), `[${env.tags[name]}] ${p.price}, ${p.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
           } else {
             if (!record.stock && p.stock) {
               console.log(`${name} - In Stock: ${p.name}`)
-              setTimeout(sendMail.bind(null, tableMaker(p), `[${env.tags[name]}] REPLENISH - ${p.price}, ${p.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
+              setTimeout(sendMail.bind(null, tableMaker(p), `[${env.tags[name]}] ${p.price}, ${p.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
             } else if ((p.price < record.price) && p.stock) {
               console.log(`${name} - Price Slash: ${p.name}`)
-              setTimeout(sendMail.bind(null, tableMaker(p), `[${env.tags[name]}] PRICE DROP: ${p.price}, ${p.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
+              setTimeout(sendMail.bind(null, tableMaker(p), `[${env.tags[name]}] ${p.price}, ${p.name}`, env.toList[name]), Math.min(500, Math.random() * 2000));
             }
             cache[p.id] = p;
           }
