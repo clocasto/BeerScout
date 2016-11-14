@@ -5,15 +5,10 @@ const env = require('../env');
 
 module.exports = function (name, cheerio, cache) {
   return function (response) {
-    if (response instanceof Error) return;
     let htmlDoc = '';
 
     //Handle errors from server
-    response.on('error', function (err) {
-      const errorMessage = `<h4>${name}</h4><br><span>${err}</span>`;
-      const subject = env.error.subject;
-      sendMail(errorMessage, subject, env.toList.admin);
-    })
+    response.on('error', console.error);
 
     //another chunk of data has been recieved, so append it to `htmlDoc`
     response.on('data', function (chunk) {
@@ -79,8 +74,7 @@ module.exports = function (name, cheerio, cache) {
             cache[p.id] = p;
           }
         })
-        console.log(`No updates for ${name}.`);
-      }
+      } else { console.log(`No updates for ${name}.`); }
     });
   }
 }

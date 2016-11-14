@@ -3,29 +3,24 @@ const tableMaker = require('../table');
 const sendMail = require('../email.js');
 const env = require('../env');
 
-module.exports = function(site, cheerio, cache) {
-  return function(response) {
-    if (response instanceof Error) return;
+module.exports = function (site, cheerio, cache) {
+  return function (response) {
     let htmlDoc = '';
 
     //Handle errors from server
-    response.on('error', function (err) {
-      const errorMessage = `<h4>${site}</h4><br><span>${err}</span>`;
-      const subject = env.error.subject;
-      sendMail(errorMessage, subject, env.toList.admin);
-    })
+    response.on('error', console.error);
 
     //another chunk of data has been recieved, so append it to `htmlDoc`
-    response.on('data', function(chunk) {
+    response.on('data', function (chunk) {
       htmlDoc += chunk;
     });
 
     //the whole response has been recieved, so we just print it out here
-    response.on('end', function() {
+    response.on('end', function () {
       const $ = cheerio.load(htmlDoc);
       const table = $('#latest')[0];
       let name = table.children[1].children[2].children[0].children[1].data;
-      if (!name) name =  table.children[1].children[2].children[0].children[1].children[0].data;
+      if (!name) name = table.children[1].children[2].children[0].children[1].children[0].data;
       const price = table.children[1].children[3].children[0].data;
       const _path = table.children[1].children[2].children[0].attribs.href;
       const link = `${env.siteInfo[site].domain}${_path}`;
