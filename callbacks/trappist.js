@@ -24,9 +24,9 @@ module.exports = function (name, cheerio, cache) {
         .children('h3')
         .children('a');
 
-      const keys = Object
-        .keys(listings.contents())
-        .filter(el => el.replace(/[^0-9]/g, '') === '' ? false : true);
+      if (!listings) return console.log(`No valid html from ${name}.`);
+
+      const keys = Object.keys(listings.contents()).filter(el => el.replace(/[^0-9]/g, '') === '' ? false : true);
 
       const prices = $('#product_list')
         .children('li')

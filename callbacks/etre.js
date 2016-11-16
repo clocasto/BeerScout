@@ -20,19 +20,14 @@ module.exports = function (name, cheerio, cache) {
 
       const $ = cheerio.load(htmlDoc);
 
-      const listings = $('.itemTitle a')
-        .toArray()
-      const names = listings.map(l => l.children[0].data);
-      const links = listings.map(l => l.attribs.href);
-      const stock = $('.tabTable .productListing-rowheading')
-        .siblings()
-        .toArray()
-        .map(n => n.children[1].children[0].data);
-      const prices = $('.tabTable .productListing-rowheading')
-        .siblings()
-        .toArray()
-        .map(n => n.children[9].children[0].data);
-      const ids = links.map(l => /products\_id\=([0-9]+)/.exec(l)[1])
+      const listings = $('.itemTitle a').toArray();
+      if (!listings) return console.log(`No valid html from ${name}.`);
+
+      const names = listings.map(list => list.children[0].data);
+      const links = listings.map(list => list.attribs.href);
+      const stock = $('.tabTable .productListing-rowheading').siblings().toArray().map(node => node.children[1].children[0].data);
+      const prices = $('.tabTable .productListing-rowheading').siblings().toArray().map(node => node.children[9].children[0].data);
+      const ids = links.map(list => /products_id=([0-9]+)/.exec(list)[1])
 
       const products = names
         .map((p, i) => {

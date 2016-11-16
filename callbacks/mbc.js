@@ -18,7 +18,10 @@ module.exports = function (site, cheerio, cache) {
     //the whole response has been recieved, so we just print it out here
     response.on('end', function () {
       const $ = cheerio.load(htmlDoc);
+
       const table = $('#latest')[0];
+      if (!table) return console.log(`No valid html from ${site}.`);
+
       let name = table.children[1].children[2].children[0].children[1].data;
       if (!name) name = table.children[1].children[2].children[0].children[1].children[0].data;
       const price = table.children[1].children[3].children[0].data;
@@ -29,7 +32,7 @@ module.exports = function (site, cheerio, cache) {
         console.log(`No updates for ${site}.`);
       } else {
         if (!cache.length) {
-          console.log(`Initialized cache for ${site}`)
+          console.log(`Initialized cache for ${site}.`)
           cache.push(_id);
         } else {
           console.log(`Updating ${site} cache for ${_id}!`);

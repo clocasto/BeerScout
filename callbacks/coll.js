@@ -23,9 +23,8 @@ module.exports = function (name, cheerio, cache, title, sight) {
 
       const $ = cheerio.load(htmlDoc);
 
-      const listings = $('.description .title h3 a')
-        .toArray()
-        .slice(0, sight);
+      const listings = $('.description .title h3 a').toArray().slice(0, sight);
+      if (!listings) return console.log(`No valid html from ${name}.`);
 
       const names = listings.map(listing => listing.children[0].data);
       const links = listings.map(listing => listing.attribs.href);

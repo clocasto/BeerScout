@@ -20,21 +20,12 @@ module.exports = function (name, cheerio, cache) {
 
       const $ = cheerio.load(htmlDoc);
 
-      const names = $('.product-name')
-        .map((i, n) => n.attribs.title)
-        .toArray();
+      const names = $('.product-name').map((i, node) => node.attribs.title).toArray();
+      if (!names) return console.log(`No valid html from ${name}.`);
 
-      const links = $('.product-name')
-        .map((i, n) => n.attribs.href);
-
-      const prices = $('.product-price')
-        .map((i, n) => $(n)
-          .text())
-
-      const availabilities = $('.availability span')
-        .map((i, n) => $(n)
-          .hasClass('available-now'))
-        .toArray();
+      const links = $('.product-name').map((i, node) => node.attribs.href);
+      const prices = $('.product-price').map((i, node) => $(node).text())
+      const availabilities = $('.availability span').map((i, node) => $(node).hasClass('available-now')).toArray();
 
       const products = names
         .map((p, i) => {
