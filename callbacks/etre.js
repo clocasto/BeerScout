@@ -40,7 +40,7 @@ module.exports = function (name, cheerio, cache) {
           }
         })
         .filter(p => {
-          return !/poster|county|sign|shirt|glass|crate/.test(p.name.toLowerCase());
+          return !env.blacklist.default.test(p.name.toLowerCase());
         })
 
       if (!Object.keys(cache).length && products.length) {

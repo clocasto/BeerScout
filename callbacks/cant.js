@@ -38,7 +38,7 @@ module.exports = function (name, cheerio, cache) {
           }
         })
         .filter(p => {
-          return !/poster|county|sign|shirt|glass|wicker|flag|zip hood|stoneware|crate/.test(p.name.toLowerCase());
+          return !env.blacklist.cant.test(p.name.toLowerCase());
         })
 
       if (!Object.keys(cache).length && products.length) {
