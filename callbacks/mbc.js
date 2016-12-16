@@ -24,6 +24,7 @@ module.exports = function(site, cheerio, cache) {
 
       let name = table.children[1].children[2].children[0].children[1].data;
       if (!name) name = table.children[1].children[2].children[0].children[1].children[0].data;
+      if (!name) name = table.children[1].children[2].children[0].children[1].children[0].children[0].data;
       const price = table.children[1].children[3].children[0].data;
       const _path = table.children[1].children[2].children[0].attribs.href;
       const link = `${env.siteInfo[site].domain}${_path}`;
@@ -47,4 +48,3 @@ module.exports = function(site, cheerio, cache) {
     });
   }
 }
-
