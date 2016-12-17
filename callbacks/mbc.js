@@ -39,7 +39,7 @@ module.exports = function(site, cheerio, cache) {
           console.log(`Updating ${site} cache for ${_id}!`);
           cache.push(_id);
           if (cache.length > 5) cache.shift();
-          if ((!env.blacklist.default.test(name.toLowerCase()) || env.whitelist[site].test(name.toLowerCase()))) {
+          if (!env.blacklist.default.test(name.toLowerCase())) {
             console.log(`${env.tags[site]} - New Listing!`)
             setTimeout(sendMail.bind(null, tableMaker({ name, price, link }), `[${env.tags[site]}] ${price}, ${name}`, env.toList[site]), Math.min(500, Math.random() * 10000));
           }
