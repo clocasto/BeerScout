@@ -12,7 +12,7 @@ function compressedBeerScout() {
 }
 
 setInterval(function () {
-  compressedBeerScout(0, cache[env.sites[0]], 0, env.request[env.sites[0]]);
+  // compressedBeerScout(0, cache[env.sites[0]], 0, env.request[env.sites[0]]);
   compressedBeerScout(1, cache[env.sites[1]][0], 4000, env.request[env.sites[1]][0]);
   compressedBeerScout(1, cache[env.sites[1]][1], 8000, env.request[env.sites[1]][1]);
   compressedBeerScout(2, cache[env.sites[2]], 12000, env.request[env.sites[2]]);
